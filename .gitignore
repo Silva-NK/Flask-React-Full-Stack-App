@@ -52,6 +52,9 @@ jspm_packages
 # Ignore bundler config.
 /.bundle
 
+#CReated  env metadata
+.env
+
 # Virtual env metadata
 .venv
 

@@ -1,4 +1,7 @@
 # Standard library imports
+import os
+
+from dotenv import load_dotenv
 
 # Remote library imports
 from flask import Flask
@@ -10,9 +13,11 @@ from sqlalchemy import MetaData
 
 # Local imports
 
+load_dotenv()
+
 # Instantiate app, set attributes
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
