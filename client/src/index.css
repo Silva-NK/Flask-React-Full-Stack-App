@@ -1,7 +1,18 @@
+/*font-family: 'Jost', sans-serif;
+font-family: 'Playfair Display', serif;
+font-family: 'Antic Slab', serif;*/
+
 :root {
-  --bg: #282c34;
-  --header: #fff;
-  --link: #61dafb;
-  --text: hsla(0, 0%, 100%, 0.88);
+   --bg: #FDF7F2;
+  --header: #8C7C77;
+  --text: #5C534F;
+  --text-light: #A8A29E;
+  --accent-teal: #2A8C6D;
+  --accent-rose: #A06A6A;      
+  --hover-teal: #1F6B54;        
+  --hover-rose: #8A5757;   
+  --link: #2A8C6D;
+  --link-hover: #1F6B54;
+  --border: #E0D6D1;
 }
 

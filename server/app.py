@@ -612,7 +612,9 @@ api.add_resource(Events, '/events', endpoint='events')
 api.add_resource(Event, '/events/<int:id>', endpoint='event')
 api.add_resource(Guests, '/guests', endpoint='guests')
 api.add_resource(Guest, '/guests/<int:id>', endpoint='guest')
-api.add_resource(EventGuests, '/events/<int:id>/guests', endpoint='event_guests')
+api.add_resource(EventGuests, '/events/<int:event_id>/guests', endpoint='event_guests')
+api.add_resource(Attendances, '/attendances', endpoint='attendances')
+api.add_resource(Attendance, '/attendances/<int:id>', endpoint='attendance')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
 

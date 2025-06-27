@@ -1,8 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import NavBar from "./NavBar";
+import { AuthContext } from "../contexts/AuthContext";
+
+import LoginPage from "../pages/LoginPage";
+import EventsPage from "../pages/EventsPage";
+import RegisterPage from "../pages/RegisterPage";
+
 
 function App() {
-  return <h1>Project Client</h1>;
+  const { isLoggedIn } = useContext(AuthContext);
+
+  return (
+    <Router>
+      {isLoggedIn && <NavBar />}
+
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        {isLoggedIn && <Route path="/events" element={<EventsPage />} />}
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
