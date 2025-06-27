@@ -1,4 +1,5 @@
 import re
+
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -24,7 +25,7 @@ class Planner(db.Model, SerializerMixin):
 
     @property
     def password(self):
-        raise AttributeError("Password is write-only.")
+        raise AttributeError("Password cannot be viewed.")
     
     @password.setter
     def password(self, plain_password):
@@ -109,6 +110,16 @@ class Guest(db.Model, SerializerMixin):
             raise ValueError("Invalid email format")
         self._email =  email
 
+    @property
+    def phone_number(self):
+        return self.phone
+    
+    @phone_number.setter
+    def phone_number(self, phone):
+        if not re.match(r"^\+?\d{7,15}$", phone):
+            raise ValueError("Invalid phone number format.")
+        self.phone = phone
+
 
     def __repr__(self):
         return f"<Guest {self.id}: {self.name}, {self.email}, {self.phone}>."
@@ -123,7 +134,7 @@ class Attendance(db.Model, SerializerMixin):
     plus_ones = db.Column(db.Integer, nullable=False)
 
     guest_id = db.Column(db.Integer, db.ForeignKey("guests.id"), nullable=False)
-    event_id = db. Column(db.Integer, db.ForeignKey("events.id"), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey("events.id"), nullable=False)
     planner_id = db.Column(db.Integer, db.ForeignKey("planners.id"), nullable=False)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
