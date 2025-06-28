@@ -1,27 +1,25 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import "../index.css"
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import { AuthContext } from "../contexts/AuthContext"
+import "../index.css";
+
+import { AuthContext } from "../contexts/AuthContext";
 
 function LoginPage(){
-    const [formData, setFormData] = useState({
-        usernameOrEmail: "",
-        password: "",
-    });
-    const [error, setError] = useState("");
-
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleChange = (evt) => {
-        setFormData({...formData, [evt.target.name]: evt.target.value});
-    };
+    const validationSchema = Yup.object({
+        usernameOrEmail: Yup.string()
+            .required("Username or Email is required."),
+        password: Yup.string()
+            .required("Password is required.")
+    });
 
-    const handleLogin = (evt) => {
-        evt.preventDefault();
-
+    const handleLogin = (values, {setSubmitting, setErrors}) => {
         fetch(`${process.env.REACT_APP_API_URL}/login`, {
             method: "POST",
             credentials: "include",
@@ -29,49 +27,73 @@ function LoginPage(){
                 "Content-Type": "application/x-www-form-urlencoded",
             },
             body: new URLSearchParams({
-                username: formData.usernameOrEmail,
-                password: formData.password,
+                username: values.usernameOrEmail,
+                password: values.password,
             }),
         })
         .then((response) => {
             if (response.ok) return response.json();
             throw new Error ("Invalid login credentials.");
         })
-        .then((data) => {
+        .then(() => {
             login();
             navigate("/events");
         })
-        .catch((err) => setError(err.message));
+        .catch((err) => setErrors({ general: err.message }))
+        .finally(() => setSubmitting(false));
     };
 
     return(
         <div className="form-container">
             <div className="form-card">
                 <h2 className="form-card__title">Login</h2>
-                {error && <p className="form-card__error">{error}</p>}
-                <form onSubmit={handleLogin} className="form-group">
-                    <input 
-                       type="text"
-                       name="usernameOrEmail"
-                       className="form-input"
-                       placeholder="Enter Username or Email"
-                       value={formData.usernameOrEmail}
-                       onChange={handleChange}
-                    />
-                    <input
-                       type="password"
-                       name="password"
-                       className="form-input"
-                       placeholder="Enter Password"
-                       value={formData.password}
-                       onChange={handleChange}
-                    />
-                    
-                    <button type="submit" className="form-button">Login</button>
-                </form>
-                
+                <Formik
+                initialValues={{usernameOrEmail: "", password: ""}}
+                validationSchema={validationSchema}
+                onSubmit={handleLogin}
+                >
+                    {({ isSubmitting, errors }) => (
+                        <Form classname="form-group">
+                            {errors.general && (
+                                <div className="form-card__error">{errors.general}</div>
+                            )}
+
+                            <Field
+                                type="text"
+                                name="usernameOrEmail"
+                                className="form-input"
+                                placeholder="Enter username or e-mail"
+                            />
+                            <ErrorMessage
+                                name="usernameOrEmail"
+                                component="div"
+                                className="form-card__error"
+                            />
+
+                            <Field
+                                type="password"
+                                name="password"
+                                className="form-input"
+                                placeholder="Enter password"
+                            />
+                            <ErrorMessage
+                                name="password"
+                                component="div"
+                                className="form-card__error"
+                            />
+
+                            <button type="submit" className="form-button" disabled={isSubmitting}>
+                                Login
+                            </button>
+                        </Form>
+                    )}
+                </Formik>
+    
                 <p className="form-footer">
-                    Don't have an account? <a href="/register" className="form-link">Register here.</a>
+                    Don't have an account?{" "}
+                    <a href="/register" className="form-link">
+                        Register here.
+                    </a>
                 </p>
             </div>
         </div>
