@@ -56,7 +56,7 @@ function RegisterPage() {
                             {errors.general && (
                                 <div className="form-card__error">{errors.general}</div>
                             )}
-                            
+
                             <Field
                                type="text"
                                name="username"
@@ -73,7 +73,7 @@ function RegisterPage() {
                                type="email"
                                name="email"
                                className="form-input"
-                               placeholder="Enter Enter e-mail address"
+                               placeholder="Enter e-mail address"
                             />
                             <ErrorMessage
                                name="email"
