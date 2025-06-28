@@ -19,6 +19,8 @@ function LoginPage(){
             .required("Password is required.")
     });
 
+    console.log("API URL:", process.env.REACT_APP_API_URL);
+
     const handleLogin = (values, {setSubmitting, setErrors}) => {
         fetch(`${process.env.REACT_APP_API_URL}/login`, {
             method: "POST",
