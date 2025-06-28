@@ -14,16 +14,30 @@ font-family: 'Antic Slab', serif;*/
   --link: #2A8C6D;
   --link-hover: #1F6B54;
   --border: #E0D6D1;
+
+  display: contents;
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  display: block;
+  min-height: 100%;
   line-height: 1.6;
   color: var(--text);
   background-color: var(--bg);
   font-family: 'Jost', sans-serif;
+}
+
+.form-container {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: rgba(0, 0, 255, 0.1);
 }
 
 /* Reusable form card */
@@ -31,7 +45,6 @@ html, body {
 .form-card {
   width: 100%;
   max-width: 450px;
-  margin: 2rem auto;
   padding: 2.5rem;
   background: white;
   border-radius: 12px;
@@ -49,11 +62,13 @@ html, body {
 
 .form-card__error {
   color: var(--accent-rose);
-  background: rgba(160, 106, 106. 0.1);
-  padding: 0.8rem;
+  background: rgba(160, 106, 106, 0.1);
+  padding: 0.8rem 1.2rem;
   border-radius: 6px;
-  margin-bottom: 1.5rem;
+  margin: 0 auto 1.5rem;
   font-size: 0.9rem;
+  text-align: center;
+  width: calc(100% - 2rem);
 }
 
 .form-card__error ul {
@@ -62,17 +77,18 @@ html, body {
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 }
 
 .form-input {
-  width: 100%;
+  width: calc(100% - 2rem);
   padding: 0.8rem 1rem;
+  margin: 0.75rem 0;
   border: 1px solid var(--border);
   border-radius: 6px;
-  font-family: 'Jost', sans-serif;
   font-size: 1rem;
-  transition: 1ll 03s ease;
+  display: block;
+  transition: all 03s ease;
   background: rgba(253, 247, 242, 0.3);
 }
 
@@ -85,13 +101,13 @@ html, body {
 .form-button {
   width: 100%;
   padding: 1rem;
+  margin-top: 1.25rem;
   background-color: var(--accent-teal);
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 500;
-  font-family: 'Jost', sans-serif;
   cursor: pointer;
   transition: background 0.3s ease;
 }
@@ -104,7 +120,7 @@ html, body {
   text-align: center;
   margin-top: 1.5rem;
   color: var(--text-light);
-  font-size: 0.95 rem;
+  font-size: 0.95rem;
 }
 
 .form-link {
@@ -113,7 +129,7 @@ html, body {
   font-weight: 500;
 }
 
-.form-link {
+.form-link:hover {
   color: var(--link-hover);
   text-decoration: underline;
 }
