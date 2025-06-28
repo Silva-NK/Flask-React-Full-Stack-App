@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -35,11 +35,13 @@ function LoginPage(){
             if (response.ok) return response.json();
             throw new Error ("Invalid login credentials.");
         })
-        .then(() => {
-            login();
-            navigate("/events");
+        .then((data) => {
+            login(data.username);
+            navigate("/dashboard");
         })
-        .catch((err) => setErrors({ general: err.message }))
+        .catch((err) => {
+            setErrors({ general: err.message });
+        })
         .finally(() => setSubmitting(false));
     };
 
@@ -53,7 +55,7 @@ function LoginPage(){
                 onSubmit={handleLogin}
                 >
                     {({ isSubmitting, errors }) => (
-                        <Form classname="form-group">
+                        <Form className="form-group">
                             {errors.general && (
                                 <div className="form-card__error">{errors.general}</div>
                             )}
@@ -91,9 +93,9 @@ function LoginPage(){
     
                 <p className="form-footer">
                     Don't have an account?{" "}
-                    <a href="/register" className="form-link">
+                    <Link to="/register" className="form-link">
                         Register here.
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

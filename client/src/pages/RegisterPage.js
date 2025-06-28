@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -32,7 +32,7 @@ function RegisterPage() {
         .then((response) => {
             if (response.ok) return response.json();
             return response.json().then((data) => {
-                throw new Error(data.errors.join(", "));
+                throw new Error(data.errors ? data.errors.join(", "): "Registration failed.");
             });
         })
         .then(() => {
@@ -101,9 +101,9 @@ function RegisterPage() {
                 </Formik>
                 <p className="form-footer">
                     Already have an account? {" "} 
-                    <a href="/login" className="form-link">
+                    <Link to="/login" className="form-link">
                         Login here.
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>
