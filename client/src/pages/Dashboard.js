@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import { AuthContext } from "../contexts/AuthContext";
 
 function Dashboard() {
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useContext(AuthContext);
     const [username, setUsername] = useState("");
 
     useEffect(() => {
@@ -14,7 +16,7 @@ function Dashboard() {
         })
         .then((data) => setUsername(data.username))
         .catch((err) => setErrors([err.message]));
-    }, []);
+    }, [setErrors]);
 
     return (
         <div className="dashboard">

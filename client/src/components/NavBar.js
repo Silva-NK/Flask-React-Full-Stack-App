@@ -5,9 +5,8 @@ import { AuthContext } from "../contexts/AuthContext";
 
 function NavBar() {
     const [showAccountMenu, setShowAccountMenu] = useState(false);
-    const [errors, setErrors] = useState("");
 
-    const { logout, username } = useContext(AuthContext)
+    const { logout, username, setErrors } = useContext(AuthContext)
     const navigate = useNavigate();
     const location = useLocation();
 
