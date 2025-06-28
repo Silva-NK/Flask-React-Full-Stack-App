@@ -23,27 +23,27 @@ function EventsPage() {
         });
     }, []);
 
-    const handleView = (id) => {
-        console.log("View Event", id);
-    };
+    // const handleView = (id) => {
+    //     console.log("View Event", id);
+    // };
 
-    const handleedit = (id) => {
-        console.log("Edit Event", id);
-    }
+    // const handleedit = (id) => {
+    //     console.log("Edit Event", id);
+    // }
 
-    const handleDelete = (id) => {
-        if (!window.confirm("Are you sure you wan to delete this evenet?")) return;
+    // const handleDelete = (id) => {
+    //     if (!window.confirm("Are you sure you wan to delete this evenet?")) return;
 
-        fetch(`${process.env.REACT_APP_API_URL}/events/${id}`, {
-            methods: "DELETE",
-            credentials: "include", 
-        })
-        .then((response) => {
-            if(!response.ok)  throw new Error("Failed to delete this event");
-            setEvents(events.filter((event) => event.id !== id));
-        })
-        .catch((err) => alert(err.message));
-    };
+    //     fetch(`${process.env.REACT_APP_API_URL}/events/${id}`, {
+    //         methods: "DELETE",
+    //         credentials: "include", 
+    //     })
+    //     .then((response) => {
+    //         if(!response.ok)  throw new Error("Failed to delete this event");
+    //         setEvents(events.filter((event) => event.id !== id));
+    //     })
+    //     .catch((err) => alert(err.message));
+    // };
 
     if (loading) return <p> Loading Events... </p>;
     if (error) return <p style={{color: "red"}}>{error}</p>
