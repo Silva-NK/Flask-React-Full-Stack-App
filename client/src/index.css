@@ -16,3 +16,104 @@ font-family: 'Antic Slab', serif;*/
   --border: #E0D6D1;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg);
+  font-family: 'Jost', sans-serif;
+}
+
+/* Reusable form card */
+
+.form-card {
+  width: 100%;
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.form-card__title {
+  color: var(--header);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.form-card__error {
+  color: var(--accent-rose);
+  background: rgba(160, 106, 106. 0.1);
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.form-card__error ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  transition: 1ll 03s ease;
+  background: rgba(253, 247, 242, 0.3);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 0 2px rgba(42, 140, 109, 0.2)
+}
+
+.form-button {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--accent-teal);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: var(--hover-teal);
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-light);
+  font-size: 0.95 rem;
+}
+
+.form-link {
+  color: var(--link);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-link {
+  color: var(--link-hover);
+  text-decoration: underline;
+}

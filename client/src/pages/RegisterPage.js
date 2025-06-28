@@ -39,19 +39,22 @@ function RegisterPage() {
     };
 
     return (
-        <div>
-            <h2>Register</h2>
+        <div className="form-card">
+            <h2 className="form-card__title">Register</h2>
             {errors.length > 0 && (
-                <ul>
-                    {errors.map((e, i) => (
-                        <li key={i}>{e}</li>
-                    ))}
-                </ul>
+                <div className="form-card__error">
+                    <ul>
+                        {errors.map((e, i) => (
+                            <li key={i}>{e}</li>
+                        ))}
+                    </ul>
+                </div>
             )}
-            <form onSubmit={handleRegister}>
+            <form onSubmit={handleRegister} className="form-group">
                 <input
                   type="text"
                   name="username"
+                  className="form-input"
                   placeholder="Enter Username"
                   value={formData.username}
                   onChange={handleChange}
@@ -59,6 +62,7 @@ function RegisterPage() {
                 <input
                   type="email"
                   name="email"
+                  className="form-input"
                   placeholder="Enter E-Mail Address"
                   value={formData.email}
                   onChange={handleChange}
@@ -66,16 +70,17 @@ function RegisterPage() {
                 <input
                   type="password"
                   name="password"
+                  className="form-input"
                   placeholder="Enter Password"
                   value={formData.password}
                   onChange={handleChange}
                 />
 
-                <button type="submit">Register</button>
+                <button type="submit" className="form-button">Register</button>
             </form>
 
-            <p>
-                Already have an account? <a href="/login">Login here.</a>
+            <p className="form-footer">
+                Already have an account? <a href="/login" className="form-link">Login here.</a>
             </p>
         </div>
     );
