@@ -44,9 +44,8 @@ function LoginPage(){
         .catch((err) => setError(err.message));
     };
 
-
     return(
-        <div className="form-container" style={{ border: '1px dashed red' }}>
+        <div className="form-container">
             <div className="form-card">
                 <h2 className="form-card__title">Login</h2>
                 {error && <p className="form-card__error">{error}</p>}

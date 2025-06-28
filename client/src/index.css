@@ -14,6 +14,8 @@ font-family: 'Antic Slab', serif;*/
   --link: #2A8C6D;
   --link-hover: #1F6B54;
   --border: #E0D6D1;
+  --bg-blue-tint: rgba(0, 0, 255, 0.1);
+  --bg-warm-tint: rgba(168, 162, 158, 0.05); 
 
   display: contents;
 }
@@ -37,7 +39,7 @@ html, body {
   padding: 20px;
   min-height: 100vh;
   box-sizing: border-box;
-  background: rgba(0, 0, 255, 0.1);
+  background: var(--bg-blue-tint);
 }
 
 /* Reusable form card */
