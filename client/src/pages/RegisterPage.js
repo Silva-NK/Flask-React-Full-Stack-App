@@ -14,7 +14,7 @@ function RegisterPage() {
             .required("Username is required."),
         email: Yup.string()
             .email("Invalid email format")
-            .required("Username is required."),
+            .required("E-Mail is required."),
         password: Yup.string()
             .min(8, "Password must be at least 8 characters.")
             .required("Password is required")
