@@ -51,46 +51,61 @@ function EventsPage() {
     if (error) return <p style={{color: "red"}}>{error}</p>
 
     return(
-        <div>
-            <h2>Events</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th> Serial No. </th>
-                    <th> Name </th>
-                    <th> Location </th>
-                    <th> Date </th>
-                    <th> Time </th>
-                    <th> Guests No. </th>
-                    <th> Actions </th>
-                </tr>
-            </thead>
-            <tbody>
-                {events.length === 0 ? (
-                    <tr>
-                        <td colSpan="7" style={{ textAlign: "center" }}>
-                            No events available.
-                        </td>
-                    </tr>
-                ) : (
-                    events.map((event, index) => (
-                        <tr key={event.id}>
-                            <td>{index+1}</td>
-                            <td>{event.name}</td>
-                            <td>{event.venue}</td>
-                            <td>{event.date}</td>
-                            <td>{event.time || "N/A"}</td>
-                            <td>{event.guests ? event.guests.length : 0}</td>
-                            <td>
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                            </td>
-                        </tr>
-                    ))
-                )}
-            </tbody>
-        </table>
+        <div className="events-table-container">
+            <h2 className="events-table__title">Your Events</h2>
+            <div className="events-table-scroll-container">
+                <div className="events-table__wrapper">
+                    <table className="events-table">
+                        <thead className="events-table__header">
+                            <tr>
+                                <th className="events-table__th"> # </th>
+                                <th className="events-table__th"> Name </th>
+                                <th className="events-table__th"> Location </th>
+                                <th className="events-table__th"> Date </th>
+                                <th className="events-table__th"> Time </th>
+                                <th className="events-table__th"> Guests No. </th>
+                                <th className="events-table__th"> Actions </th>
+                            </tr>
+                        </thead>
+                        <tbody className="events-table__body">
+                            {events.length === 0 ? (
+                                <tr className="events-table__empty-row">
+                                    <td colSpan="7" className="events-table__empty-message">
+                                        No events yet. Create your first event!
+                                    </td>
+                                </tr>
+                            ) : (
+                                events.map((event, index) => (
+                                    <tr key={event.id} className="events-table__row">
+                                        <td className="events-table__td events-table__serial">{index+1}</td>
+                                        <td className="events-table__td events-table__name">{event.name}</td>
+                                        <td className="events-table__td events-table__venue">{event.venue}</td>
+                                        <td className="events-table__td events-table__date">{event.date}</td>
+                                        <td className="events-table__td events-table__time">{event.time || "N/A"}</td>
+                                        <td className="events-table__td events-table__guests">
+                                            <span className="guests-badge">{event.guests ? event.guests.length : 0}</span>
+                                        </td>
+                                        <td className="events-table__td events-table__actions">
+                                            <button className="events-table__action-btn" aria-label="Edit event">
+                                                <i className='bx  bx-edit-alt'  ></i>
+                                            </button>
+                                            <button className="events-table__action-btn" aria-label="See all details">
+                                                <i className='bx  bx-file-detail'  ></i>
+                                            </button>
+                                            <button className="events-table__action-btn" aria-label="See guest list">
+                                                <i className='bx  bx-group'  ></i>
+                                            </button>
+                                            <button className="events-table__action-btn events-table__action-btn--delete" aria-label="Delete event">
+                                                <i className='bx  bx-trash'  ></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 }

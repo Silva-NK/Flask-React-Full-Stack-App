@@ -2,6 +2,8 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import "../index.css"
+
 function EventForm() {
     const initialValues = {
         name: "",
@@ -59,73 +61,104 @@ function EventForm() {
     };
 
     return (
-        <div>
-            <h2> Create New Event </h2>
-            <Formik
-               initialValues={initialValues}
-               validationSchema={validationSchema}
-               onSubmit={onSubmit}
-            >
-                {({ isSubmitting, errors }) => (
-                    <Form>
-                        <div>
-                            <label htmlFor="name"> Event Name: </label>
-                            <Field type="text" name="name" />
-                            <ErrorMessage 
-                               name="name"
-                               component="div"
-                               className="error" 
-                            />
-                        </div>
+        <div className="events-form-wrapper">
+            <div className="form-card">
+                <h2 className="form-card__title"> Create New Event </h2>
+                <Formik
+                   initialValues={initialValues}
+                   validationSchema={validationSchema}
+                   onSubmit={onSubmit}
+                >
+                    {({ isSubmitting, errors }) => (
+                        <Form className="form-group">
+                            {errors.api && (
+                                <div className="form-card__error">{errors.api}</div>
+                            )}
+                            <div className="form-field">
+                                <label htmlFor="name" className="form-label"> Event Name: </label>
+                                <Field 
+                                   type="text"
+                                   name="name" 
+                                   className="form-input"
+                                   placeholder="E.g. Anchors Inc. Networking Mixer"
+                                />
 
-                        <div>
-                            <label htmlFor="description"> Event Description: </label>
-                            <Field as="textarea" name="description" />
-                            <ErrorMessage
-                               name="description"
-                               component="div"
-                               className="error"
-                            />
-                        </div>
+                                <ErrorMessage 
+                                   name="name"
+                                   component="div"
+                                   className="form-card__error" 
+                                />
+                            </div>
 
-                        <div>
-                            <label htmlFor="venue"> Venue: </label>
-                            <Field type="text" name="venue" />
-                            <ErrorMessage
-                               name="venue"
-                               component="div"
-                               className="error"
-                            />
-                        </div>
+                            <div className="form-field">
+                                <label htmlFor="description" className="form-label" > Event Description: </label>
+                                <Field 
+                                   as="textarea"
+                                   name="description"
+                                   className="form-input"
+                                   placeholder="Tell guests what to expect..."
+                                />
 
-                        <div>
-                            <label htmlFor="date"> Date (YYYY-MM-DD): </label>
-                            <Field type="date" name="date" />
-                            <ErrorMessage
-                               name="date"
-                               component="div"
-                               className="error"
-                            />
-                        </div>
+                                <ErrorMessage
+                                   name="description"
+                                   component="div"
+                                   className="form-card__error"
+                                />
+                            </div>
 
-                        <div>
-                            <label htmlFor="time"> Time (HH:MM): </label>
-                            <Field type="time" name="time" />
-                            <ErrorMessage
-                               name="time"
-                               component="div"
-                               className="error"
-                            />
-                        </div>
+                            <div className="form-field">
+                                <label htmlFor="venue" className="form-label" > Venue: </label>
+                                <Field 
+                                   type="text"
+                                   name="venue"
+                                   className="form-input"
+                                   placeholder="Where is it happening?"
+                                />
+                                <ErrorMessage
+                                   name="venue"
+                                   component="div"
+                                   className="form-card__error"
+                                />
+                            </div>
 
-                        {errors.api && <div className="error">{errors.api}</div>}
+                            <div className="form-field">
+                                <label htmlFor="date" className="form-label" > Date (YYYY-MM-DD): </label>
+                                <Field 
+                                   type="date"
+                                   name="date"
+                                   className="form-input"
+                                />
+                                <ErrorMessage
+                                   name="date"
+                                   component="div"
+                                   className="form-card__error"
+                                />
+                            </div>
 
-                        <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Creating..." : "Create Event"}
+                            <div className="form-field">
+                                <label htmlFor="time" className="form-label" > Time (HH:MM): </label>
+                                <Field 
+                                   type="time"
+                                   name="time"
+                                   className="form-input"
+                                />
+                                <ErrorMessage
+                                   name="time"
+                                   component="div"
+                                   className="error"
+                                />
+                            </div>
+
+                        <button type="submit" className="form-button form-button--full" disabled={isSubmitting}>
+                            {isSubmitting ? (
+                                <span className="form-button__text">Creating... </span> 
+                            ) : (
+                                <span className="form-button__text">Create Event</span>)}
                         </button>
                     </Form>
                 )}
             </Formik>
+        </div>
         </div>
     );
 }
