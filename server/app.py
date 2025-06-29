@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import re
+import os
 
 from sqlalchemy import or_
 from datetime import datetime
@@ -70,7 +71,7 @@ class Login(Resource):
             password = request.form.get('password')
             
             planner = Planner.query.filter(
-                or_(Planner.username == username_or_email, Planner._email == username_or_email)
+                or_(Planner.username == username_or_email, Planner.email == username_or_email)
             ).first()
             
             if planner and planner.check_password(password):
@@ -619,4 +620,4 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run( host='0.0.0.0', port=int(os.environ.get("PORT", 5555)), debug=True)

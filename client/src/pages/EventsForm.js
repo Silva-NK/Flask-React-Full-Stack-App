@@ -1,0 +1,133 @@
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+function EventForm() {
+    const initialValues = {
+        name: "",
+        description: "",
+        venue: "",
+        date: "",
+        time: "",
+    };
+
+    const validationSchema = Yup.object({
+        name: Yup.string()
+            .required("Event name is required."),
+        description: Yup.string()
+            .required("Description is required."),
+        venue: Yup.string()
+            .notRequired(),
+        date: Yup.date()
+            .required("Date is required."),
+        time: Yup.string()
+            .matches(
+                /^([0-1]\d|2[0-3]):([0-5]\d)$/,
+                "Invalid time format. Use HH:MM (24hr)."
+            )
+            .notRequired(),
+    });
+
+    const onSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
+        fetch(`${process.env.REACT_APP_API_URL}/events`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(values),
+        })
+        .then((response) => {
+            if (response.ok) return response.json();
+            return response.json().then((data) => {
+                throw new Error(
+                    data.errors ? data.errors.join(" ") : "Event creation failed."
+                );
+            });
+        })
+        .then((data) => {
+            resetForm();
+            // I want to add a success display message.
+        })
+        .catch((error) => {
+            console.error("Error creating event: ", error);
+            setErrors({api: error.message});
+        })
+        .finally(() => {
+            setSubmitting(false);
+        });
+    };
+
+    return (
+        <div>
+            <h2> Create New Event </h2>
+            <Formik
+               initialValues={initialValues}
+               validationSchema={validationSchema}
+               onSubmit={onSubmit}
+            >
+                {({ isSubmitting, errors }) => (
+                    <Form>
+                        <div>
+                            <label htmlFor="name"> Event Name: </label>
+                            <Field type="text" name="name" />
+                            <ErrorMessage 
+                               name="name"
+                               component="div"
+                               className="error" 
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="description"> Event Description: </label>
+                            <Field as="textarea" name="description" />
+                            <ErrorMessage
+                               name="description"
+                               component="div"
+                               className="error"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="venue"> Venue: </label>
+                            <Field type="text" name="venue" />
+                            <ErrorMessage
+                               name="venue"
+                               component="div"
+                               className="error"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="date"> Date (YYYY-MM-DD): </label>
+                            <Field type="date" name="date" />
+                            <ErrorMessage
+                               name="date"
+                               component="div"
+                               className="error"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="time"> Time (HH:MM): </label>
+                            <Field type="time" name="time" />
+                            <ErrorMessage
+                               name="time"
+                               component="div"
+                               className="error"
+                            />
+                        </div>
+
+                        {errors.api && <div className="error">{errors.api}</div>}
+
+                        <button type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? "Creating..." : "Create Event"}
+                        </button>
+                    </Form>
+                )}
+            </Formik>
+        </div>
+    );
+}
+
+export default EventForm;

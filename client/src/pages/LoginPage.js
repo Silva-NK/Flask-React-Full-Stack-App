@@ -8,7 +8,7 @@ import "../index.css";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-function LoginPage(){
+function LoginPage() {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -18,8 +18,6 @@ function LoginPage(){
         password: Yup.string()
             .required("Password is required.")
     });
-
-    console.log("API URL:", process.env.REACT_APP_API_URL);
 
     const handleLogin = (values, {setSubmitting, setErrors}) => {
         fetch(`${process.env.REACT_APP_API_URL}/login`, {

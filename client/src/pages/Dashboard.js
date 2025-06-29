@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { AuthContext } from "../contexts/AuthContext";
 
 function Dashboard() {
-    const [errors, setErrors] = useContext(AuthContext);
-    const [username, setUsername] = useState("");
+    const { username, errors, setErrors } = useContext(AuthContext);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/profile`, {
@@ -14,7 +13,6 @@ function Dashboard() {
             if (response.ok) return response.json();
             else throw new Error("Failed to fetch profile.");
         })
-        .then((data) => setUsername(data.username))
         .catch((err) => setErrors([err.message]));
     }, [setErrors]);
 
