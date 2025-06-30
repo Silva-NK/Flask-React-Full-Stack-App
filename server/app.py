@@ -123,9 +123,7 @@ class Profile(Resource):
         return {
             'id': planner.id,
             'username': planner.username,
-            'email': planner.email,
-            'created_at': planner.created_at,
-            'updated_at': planner.updated_at
+            'email': planner.email
         }, 200
   
 

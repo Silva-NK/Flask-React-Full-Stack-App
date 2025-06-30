@@ -1,10 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import "../index.css"
 
 function EventForm() {
+    const navigate = useNavigate();
+    
     const initialValues = {
         name: "",
         description: "",
@@ -31,13 +34,16 @@ function EventForm() {
     });
 
     const onSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
+        const formData = new FormData();
+
+        Object.keys(values).forEach((key) => {
+            formData.append(key, values[key]);
+        })
+
         fetch(`${process.env.REACT_APP_API_URL}/events`, {
             method: "POST",
             credentials: "include",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams(values),
+            body: formData,
         })
         .then((response) => {
             if (response.ok) return response.json();
@@ -49,6 +55,7 @@ function EventForm() {
         })
         .then((data) => {
             resetForm();
+            alert(" Event created successfully! ")
             // I want to add a success display message.
         })
         .catch((error) => {
@@ -69,7 +76,7 @@ function EventForm() {
                    validationSchema={validationSchema}
                    onSubmit={onSubmit}
                 >
-                    {({ isSubmitting, errors }) => (
+                    {({ isSubmitting, errors, resetForm }) => (
                         <Form className="form-group">
                             {errors.api && (
                                 <div className="form-card__error">{errors.api}</div>
@@ -78,7 +85,8 @@ function EventForm() {
                                 <label htmlFor="name" className="form-label"> Event Name: </label>
                                 <Field 
                                    type="text"
-                                   name="name" 
+                                   name="name"
+                                   id="name" 
                                    className="form-input"
                                    placeholder="E.g. Anchors Inc. Networking Mixer"
                                 />
@@ -95,6 +103,7 @@ function EventForm() {
                                 <Field 
                                    as="textarea"
                                    name="description"
+                                   id="description"
                                    className="form-input"
                                    placeholder="Tell guests what to expect..."
                                 />
@@ -111,6 +120,7 @@ function EventForm() {
                                 <Field 
                                    type="text"
                                    name="venue"
+                                   id="venue"
                                    className="form-input"
                                    placeholder="Where is it happening?"
                                 />
@@ -126,6 +136,7 @@ function EventForm() {
                                 <Field 
                                    type="date"
                                    name="date"
+                                   id="date"
                                    className="form-input"
                                 />
                                 <ErrorMessage
@@ -140,6 +151,7 @@ function EventForm() {
                                 <Field 
                                    type="time"
                                    name="time"
+                                   id="time"
                                    className="form-input"
                                 />
                                 <ErrorMessage
@@ -149,12 +161,41 @@ function EventForm() {
                                 />
                             </div>
 
-                        <button type="submit" className="form-button form-button--full" disabled={isSubmitting}>
-                            {isSubmitting ? (
-                                <span className="form-button__text">Creating... </span> 
-                            ) : (
-                                <span className="form-button__text">Create Event</span>)}
-                        </button>
+                        <div className="form-button-group">
+                            <div className="form-button-group__left">
+                                <button 
+                                   type="button"
+                                   className="form-button form-button--secondary"
+                                   onClick={() => resetForm()}
+                                   disabled={ isSubmitting }
+                                >
+                                    Clear Form
+                                </button>
+
+                                <button 
+                                   type="button"
+                                   className="form-button form-button--tetiary"
+                                   onClick={() => navigate("/guests")}
+                                   disabled={ isSubmitting }
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                            
+                            <div className="form-button-group__right">
+                                <button
+                                   type="submit"
+                                   className="form-button form-button--full"
+                                   disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? (
+                                        <span className="form-button__text">Creating... </span> 
+                                    ) : (
+                                        <span className="form-button__text">Create Event</span>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
                     </Form>
                 )}
             </Formik>

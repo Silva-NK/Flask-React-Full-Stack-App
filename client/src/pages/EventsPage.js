@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../index.css"
 
 function EventsPage() {
+    const navigate = useNavigate();
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+    const [errors, setErrors] = useState("");
 
     useEffect(() =>{
         fetch(`${process.env.REACT_APP_API_URL}/events`, {
@@ -13,42 +15,38 @@ function EventsPage() {
         })
         .then((response) => {
             if(response.ok) return response.json();
-            throw new Error("Failed to fetch events");
+            throw new Error("Failed to fetch events.");
         })
         .then((data) => {
             setEvents(data);
             setLoading(false);
         })
         .catch((err) => {
-            setError(err.message);
+            setErrors(err.message);
             setLoading(false);
         });
     }, []);
 
-    // const handleView = (id) => {
-    //     console.log("View Event", id);
-    // };
+    const handleDelete = (id) => {
+        if(!window.confirm("Are you sure you want to delete this event?")) return;
 
-    // const handleedit = (id) => {
-    //     console.log("Edit Event", id);
-    // }
-
-    // const handleDelete = (id) => {
-    //     if (!window.confirm("Are you sure you wan to delete this evenet?")) return;
-
-    //     fetch(`${process.env.REACT_APP_API_URL}/events/${id}`, {
-    //         methods: "DELETE",
-    //         credentials: "include", 
-    //     })
-    //     .then((response) => {
-    //         if(!response.ok)  throw new Error("Failed to delete this event");
-    //         setEvents(events.filter((event) => event.id !== id));
-    //     })
-    //     .catch((err) => alert(err.message));
-    // };
+        fetch(`${process.env.REACT_APP_API_URL}/events/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+        })
+        .then((resp) => {
+            if(!resp.ok) throw new Error("Failed to delete event.");
+            setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+        })
+        .catch((err) => {
+            setErrors(err.message);
+            console.error("Error deleting event: ", err);
+            alert("Failed to delete event.Please try again.")
+        });
+    };
 
     if (loading) return <p> Loading Events... </p>;
-    if (error) return <p style={{color: "red"}}>{error}</p>
+    if (errors) return <p style={{color: "red"}}>{errors}</p>
 
     return(
         <div className="events-table-container">
@@ -86,16 +84,32 @@ function EventsPage() {
                                             <span className="guests-badge">{event.guests ? event.guests.length : 0}</span>
                                         </td>
                                         <td className="events-table__td events-table__actions">
-                                            <button className="events-table__action-btn" aria-label="Edit event">
+                                            <button 
+                                               className="events-table__action-btn"
+                                               onClick={() => navigate(`/events/${event.id}/edit`)}
+                                               aria-label="Edit event"
+                                            >
                                                 <i className='bx  bx-edit-alt'  ></i>
                                             </button>
-                                            <button className="events-table__action-btn" aria-label="See all details">
+                                            <button
+                                               className="events-table__action-btn"
+                                               onClick={() => navigate(`/events/${event.id}`)}
+                                               aria-label="View details"
+                                            >
                                                 <i className='bx  bx-file-detail'  ></i>
                                             </button>
-                                            <button className="events-table__action-btn" aria-label="See guest list">
+                                            <button 
+                                               className="events-table__action-btn"
+                                               onClick={() => navigate(`/events/${event.id}/guests`)}
+                                               aria-label="View guest list"
+                                            >
                                                 <i className='bx  bx-group'  ></i>
                                             </button>
-                                            <button className="events-table__action-btn events-table__action-btn--delete" aria-label="Delete event">
+                                            <button 
+                                               className="events-table__action-btn events-table__action-btn--delete"
+                                               onClick={() => handleDelete(event.id)}
+                                               aria-label="Delete event"
+                                            >
                                                 <i className='bx  bx-trash'  ></i>
                                             </button>
                                         </td>
