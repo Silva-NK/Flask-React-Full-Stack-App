@@ -32,12 +32,21 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
         plus_ones: Yup.number().min(0, "Number of plus ones must be zero or greater."),
     });
 
+    const defaultInitialValues = {
+        guest_id: "",
+        event_id: "",
+        rsvp_status: "Pending",
+        plus_ones: 0,
+    };
+
+    const formInitialValues = { ...defaultInitialValues, ...initialValues };
+
     return (
         <div className="form-container">
             <div className="form-card">
                 <h2 className="form-card__title">{title}</h2>
                 <Formik
-                    initialValues={initialValues}
+                    initialValues={formInitialValues}
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}
                 >

@@ -1,8 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import EventsForm from "../components/EventsForm";
 
 const AddEvents = () => {
-    const handleSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = (values, actions) => {
+        const { setSubmitting, resetForm, setErrors } = actions;
+
         fetch(`${process.env.REACT_APP_API_URL}/events`, {
             method: "POST",
             credentials: "include",
@@ -22,6 +27,7 @@ const AddEvents = () => {
         .then(() => {
             resetForm();
             alert("Event created successfully!");
+            navigate("/events")
         })
         .catch((error) => {
             setErrors({ api: error.message });

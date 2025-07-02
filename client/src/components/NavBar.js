@@ -35,33 +35,58 @@ function NavBar() {
                 <li className={location.pathname === '/dashboard' ? 'active' : ''}>
                     <Link to="/dashboard">Dashboard</Link>
                 </li>
-                <li className={location.pathname.startsWith('/events') ? 'active' : ''}>
+                <li className={ 
+                    location.pathname === '/events' || 
+                    location.pathname === '/events/new' ? 'active' : ''
+                }>
                     Events
                     <ul>
-                        <li><Link to="/events">All Events</Link></li>
-                        <li><Link to="/events/new">Add New Event</Link></li>
+                        <li className={location.pathname === '/events' ? 'active-child' : ''}>
+                            <Link to="/events">All Events</Link>
+                        </li>
+                        <li className={location.pathname === '/events/new' ? 'active-child' : ''}>
+                            <Link to="/events/new">Add New Event</Link>
+                        </li>
                     </ul>
                 </li>
-                <li className={location.pathname.startsWith('/guests') ? 'active' : ''}>
+                <li className={ 
+                    location.pathname === '/guests' || 
+                    location.pathname === '/guests/new' ? 'active' : ''
+                }>
                     Guests
                     <ul>
-                        <li><Link to="/guests">All Guests</Link></li>
-                        <li><Link to="/guests/new">Add New Guest</Link></li>
+                        <li className={location.pathname === '/guest' ? 'active-child' : ''}>
+                            <Link to="/guests">All Guests</Link>
+                        </li>
+                        <li className={location.pathname === '/guests/new' ? 'active-child' : ''}>
+                            <Link to="/guests/new">Add New Guest</Link>
+                        </li>
                     </ul>
                 </li>
-                <li className={location.pathname.startsWith('/attendances') ? 'active' : ''}>
+                <li className={ 
+                    location.pathname === '/attendances/new' ? 'active' : ''
+                }>
                     Attendance
                     <ul>
-                        <li><Link to="/attendances/new">Add New Attendance</Link></li>
+                        <li className={location.pathname === '/attendances/new' ? 'active-child' : ''}>
+                            <Link to="/attendances/new">Add New Attendance</Link>
+                        </li>
                     </ul>
                 </li>
                 <li>
                     <i className='bx bx-user' onClick={toggleAccountMenu}></i>
                     {showAccountMenu && (
                         <div className="account-menu">
-                            <p>{user ? user.username : "Loading..."}</p>
-                            <Link to="/profile">Profile</Link><br />
-                            <button onClick={handleLogout}>Logout</button>
+                            <div className="account-header">
+                                <p className="account-email">{user?.email}</p>
+                            </div>
+                            <div className="account-divider"></div>
+                            <Link to="/profile" className="account-item">
+                                <i className='bx bx-user-circle'></i> Profile
+                            </Link>
+                            <button className="account-item" onClick={handleLogout}>
+                                <i className='bx bx-log-out'></i> Logout
+                            </button>
                         </div>
                     )}
                 </li>

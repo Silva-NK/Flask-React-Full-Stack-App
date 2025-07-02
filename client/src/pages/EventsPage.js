@@ -87,28 +87,28 @@ function EventsPage() {
                                             <button 
                                                className="events-table__action-btn"
                                                onClick={() => navigate(`/events/${event.id}/edit`)}
-                                               aria-label="Edit event"
+                                               title="Edit event"
                                             >
                                                 <i className='bx  bx-edit-alt'  ></i>
                                             </button>
                                             <button
                                                className="events-table__action-btn"
                                                onClick={() => navigate(`/events/${event.id}`)}
-                                               aria-label="View details"
+                                               title="View details"
                                             >
-                                                <i className='bx  bx-file-detail'  ></i>
+                                                <i className='bx  bx-folder-open'  ></i> 
                                             </button>
                                             <button 
                                                className="events-table__action-btn"
                                                onClick={() => navigate(`/events/${event.id}/guests`)}
-                                               aria-label="View guest list"
+                                               title="View guest list"
                                             >
                                                 <i className='bx  bx-group'  ></i>
                                             </button>
                                             <button 
                                                className="events-table__action-btn events-table__action-btn--delete"
                                                onClick={() => handleDelete(event.id)}
-                                               aria-label="Delete event"
+                                               title="Delete event"
                                             >
                                                 <i className='bx  bx-trash'  ></i>
                                             </button>

@@ -28,7 +28,9 @@ const EditEvents = () => {
         });
     }, [id, navigate]);
 
-    const handleSubmit = (values, { setSubmitting, setErrors }) => {
+    const handleSubmit = (values, actions) => {
+        const { setSubmitting, setErrors } = actions;
+
         fetch(`${process.env.REACT_APP_API_URL}/events/${id}`, {
             method: "PATCH",
             credentials: "include",

@@ -22,8 +22,19 @@ function EventsForm({ initialValues = {}, onSubmit, title = "Create Event" }) {
             .notRequired(),
     });
 
-    const handleSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
-        onSubmit(values, setSubmitting, resetForm, setErrors);
+    const defaultInitialValues = {
+        name: "",
+        description: "",
+        venue: "",
+        date: "",
+        time: "",
+    };
+
+    const formInitialValues = { ...defaultInitialValues, ...initialValues };
+
+
+    const handleSubmit = (values, actions) => {
+        onSubmit(values, actions);
     };
 
     return (
@@ -31,7 +42,7 @@ function EventsForm({ initialValues = {}, onSubmit, title = "Create Event" }) {
             <div className="form-card">
                 <h2 className="form-card__title">{title}</h2>
                 <Formik
-                    initialValues={initialValues}
+                    initialValues={formInitialValues}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >

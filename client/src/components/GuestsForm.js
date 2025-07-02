@@ -190,6 +190,14 @@ function GuestsForm({ initialValues = {}, onSubmit, title = "Add Guest" }) {
             .required("Guest's phone number is required."),
     });
 
+    const defaultInitialValues = {
+        name: "",
+        email: "",
+        phone: "",
+    };
+
+    const formInitialValues = { ...defaultInitialValues, ...initialValues };
+
     const handleSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
         const formData = new FormData();
         Object.keys(values).forEach((key) => formData.append(key, values[key]));
@@ -202,7 +210,7 @@ function GuestsForm({ initialValues = {}, onSubmit, title = "Add Guest" }) {
             <div className="form-card">
                 <h2 className="form-card__title">{title}</h2>
                 <Formik
-                    initialValues={initialValues}
+                    initialValues={formInitialValues}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >

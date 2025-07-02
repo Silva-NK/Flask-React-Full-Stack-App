@@ -4,12 +4,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import { AuthContext } from "../contexts/AuthContext";
 
-import Dashboard from "../pages/Dashboard"
 import LoginPage from "../pages/LoginPage";
 import EventsPage from "../pages/EventsPage";
 import RegisterPage from "../pages/RegisterPage";
+import Dashboard from "../pages/Dashboard";
+import ProfilePage from "../pages/ProfilePage";
 import AddEvents from "../pages/AddEvents";
 import EditEvents from "../pages/EditEvents";
+import EventDetails from "../pages/EventDetails";
 import GuestsPage from "../pages/GuestsPage";
 import AddGuests from "../pages/AddGuests";
 import EditGuests from "../pages/EditGuests";
@@ -31,9 +33,11 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         {isLoggedIn && <Route path="/dashboard" element={<Dashboard />} />}
+        {isLoggedIn && <Route path="/profile" element={<ProfilePage />} />}
         {isLoggedIn && <Route path="/events" element={<EventsPage />} />}
         {isLoggedIn && <Route path="/events/new" element={<AddEvents />} />}
         {isLoggedIn && <Route path="/events/:id/edit" element={<EditEvents />} />}
+        {isLoggedIn && <Route path="/events/:id" element={<EventDetails />} />}
         {isLoggedIn && <Route path="/guests" element={<GuestsPage />} />}
         {isLoggedIn && <Route path="/guests/new" element={<AddGuests />} />}
         {isLoggedIn && <Route path="/guests/:id/edit" element={<EditGuests />} />}
