@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import AttendanceForm from "../components/AttendanceForm";
 
 const AddAttendance = () => {
+    const navigate = useNavigate();
+
     const handleSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
         const formData = new FormData();
         Object.keys(values).forEach((key) => {
@@ -11,7 +14,10 @@ const AddAttendance = () => {
         fetch(`${process.env.REACT_APP_API_URL}/attendances`, {
             method: "POST",
             credentials: "include",
-            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
         })
         .then((response) => {
             if (response.ok) return response.json();
@@ -19,9 +25,10 @@ const AddAttendance = () => {
                 throw new Error(data.errors ? data.errors.join(" ") : "Attendance creation failed.");
             });
         })
-        .then(() => {
+        .then((data) => {
             resetForm();
             alert("Attendance added successfully!");
+            navigate(`/attendances/${data.attendance.id}`);
         })
         .catch((error) => {
             setErrors({ api: error.message });

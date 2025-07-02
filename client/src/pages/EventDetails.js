@@ -26,20 +26,47 @@ function EventDetails() {
         });
     }, [id]);
 
-    if (loading) return <p>Loading event details...</p>;
-    if (errors) return <p style={{ color: "red" }}>{errors}</p>;
-    if (!event) return <p>Event not found.</p>;
+    if (loading) return <p className="loading-message">Loading event details...</p>;
+    if (errors) return <p className="error-message">{errors}</p>;
+    if (!event) return <p className="not-found-message">Event not found.</p>;
 
     return (
-        <div>
-            <h2>{event.name}</h2>
-            <p><strong>Description:</strong> {event.description}</p>
-            <p><strong>Venue:</strong> {event.venue || "N/A"}</p>
-            <p><strong>Date:</strong> {event.date}</p>
-            <p><strong>Time:</strong> {event.time || "N/A"}</p>
-            <p><strong>Guests Count:</strong> {event.guest_count}</p>
+        <div className="details-container">
+            <div className="details-card">
+                <h2 className="details-title">{event.name}</h2>
+                
+                <div className="details-content">
+                    <div className="detail-row">
+                        <span className="detail-label">Description:</span>
+                        <span className="detail-value">{event.description}</span>
+                    </div>
+                    <div className="detail-row">
+                        <span className="detail-label">Venue:</span>
+                        <span className="detail-value">{event.venue || "N/A"}</span>
+                    </div>
+                    <div className="detail-row">
+                        <span className="detail-label">Date:</span>
+                        <span className="detail-value">{event.date}</span>
+                    </div>
+                    <div className="detail-row">
+                        <span className="detail-label">Time:</span>
+                        <span className="detail-value">{event.time || "N/A"}</span>
+                    </div>
+                    <div className="detail-row">
+                        <span className="detail-label">Guests Count:</span>
+                        <span className="detail-value">{event.guest_count}</span>
+                    </div>
+                </div>
 
-            <button onClick={() => navigate("/events")}>Back to Events</button>
+                <div className="details-actions">
+                    <button 
+                        className="details-button details-button--back"
+                        onClick={() => navigate("/events")}
+                    >
+                        Back to Events
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

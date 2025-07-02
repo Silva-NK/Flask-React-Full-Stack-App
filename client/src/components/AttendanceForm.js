@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "../index.css";
 
-function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance" }) {
+function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance", isEdit = false }) {
     const navigate = useNavigate();
     const [guests, setGuests] = useState([]);
     const [events, setEvents] = useState([]);
@@ -26,10 +26,14 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
     }, []);
 
     const validationSchema = Yup.object({
-        guest_id: Yup.string().required("Guest is required."),
-        event_id: Yup.string().required("Event is required."),
-        rsvp_status: Yup.string().required("RSVP status is required."),
-        plus_ones: Yup.number().min(0, "Number of plus ones must be zero or greater."),
+        guest_id: Yup.string()
+            .required("Guest is required."),
+        event_id: Yup.string()
+            .required("Event is required."),
+        rsvp_status: Yup.string()
+            .required("RSVP status is required."),
+        plus_ones: Yup.number()
+            .min(0, "Number of plus ones must be zero or greater."),
     });
 
     const defaultInitialValues = {
@@ -50,7 +54,7 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}
                 >
-                    {({ isSubmitting, resetForm }) => (
+                    {({ isSubmitting, resetForm, values }) => (
                         <Form className="form-group">
                             {initialValues.id && (
                                 <div className="form-field">
@@ -65,31 +69,35 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
                                 </div>
                             )}
 
-                            <div className="form-field">
-                                <label htmlFor="guest_id" className="form-label">Guest:</label>
-                                <Field as="select" name="guest_id" id="guest_id" className="form-input">
-                                    <option value="">Select Guest</option>
-                                    {guests.map(guest => (
-                                        <option key={guest.id} value={guest.id}>
-                                            {guest.name}
-                                        </option>
-                                    ))}
-                                </Field>
-                                <ErrorMessage name="guest_id" component="div" className="form-card__error" />
-                            </div>
+                           {!isEdit && (
+                                <div className="form-field">
+                                    <label htmlFor="guest_id" className="form-label">Guest:</label>
+                                    <Field as="select" name="guest_id" id="guest_id" className="form-input">
+                                        <option value="">Select Guest</option>
+                                        {guests.map(guest => (
+                                            <option key={guest.id} value={guest.id}>
+                                                {guest.name}
+                                            </option>
+                                        ))}
+                                    </Field>
+                                    <ErrorMessage name="guest_id" component="div" className="form-card__error" />
+                                </div>
+                           )}
 
-                            <div className="form-field">
-                                <label htmlFor="event_id" className="form-label">Event:</label>
-                                <Field as="select" name="event_id" id="event_id" className="form-input">
-                                    <option value="">Select Event</option>
-                                    {events.map(event => (
-                                        <option key={event.id} value={event.id}>
-                                            {event.name}
-                                        </option>
-                                    ))}
-                                </Field>
-                                <ErrorMessage name="event_id" component="div" className="form-card__error" />
-                            </div>
+                            {!isEdit && (
+                                <div className="form-field">
+                                    <label htmlFor="event_id" className="form-label">Event:</label>
+                                    <Field as="select" name="event_id" id="event_id" className="form-input">
+                                        <option value="">Select Event</option>
+                                        {events.map(event => (
+                                            <option key={event.id} value={event.id}>
+                                                {event.name}
+                                            </option>
+                                        ))}
+                                    </Field>
+                                    <ErrorMessage name="event_id" component="div" className="form-card__error" />
+                                </div>
+                            )}
 
                             <div className="form-field">
                                 <label htmlFor="rsvp_status" className="form-label">RSVP Status:</label>
@@ -103,7 +111,13 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
 
                             <div className="form-field">
                                 <label htmlFor="plus_ones" className="form-label">Plus Ones:</label>
-                                <Field type="number" name="plus_ones" id="plus_ones" className="form-input" />
+                                <Field 
+                                   type="number"
+                                   name="plus_ones"
+                                   id="plus_ones"
+                                   className="form-input"
+                                   disabled={values.rsvp_status === "Declined"}
+                                />
                                 <ErrorMessage name="plus_ones" component="div" className="form-card__error" />
                             </div>
 

@@ -11,7 +11,9 @@ const EditGuests = () => {
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/guests/${id}`, {
             method: "GET",
-            credentials: "include",
+            credentials: "include",headers: {
+                "Content-Type": "application/json",
+            },
         })
         .then((response) => response.json())
         .then((data) => {
@@ -24,11 +26,14 @@ const EditGuests = () => {
         });
     }, [id, navigate]);
 
-    const handleSubmit = (formData, setSubmitting, resetForm, setErrors) => {
+    const handleSubmit = (values, setSubmitting, setErrors) => {
         fetch(`${process.env.REACT_APP_API_URL}/guests/${id}`, {
             method: "PATCH",
             credentials: "include",
-            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
         })
         .then((response) => {
             if (response.ok) return response.json();

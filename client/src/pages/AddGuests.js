@@ -1,12 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import GuestsForm from "../components/GuestsForm";
 
 const AddGuests = () => {
-    const handleSubmit = (formData, setSubmitting, resetForm, setErrors) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = (values, setSubmitting, resetForm, setErrors) => {
         fetch(`${process.env.REACT_APP_API_URL}/guests`, {
             method: "POST",
             credentials: "include",
-            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
         })
         .then((response) => {
             if (response.ok) return response.json();
@@ -19,6 +25,7 @@ const AddGuests = () => {
         .then(() => {
             resetForm();
             alert("Guest added successfully!");
+            navigate("/guests")
         })
         .catch((error) => {
             setErrors({ api: error.message });

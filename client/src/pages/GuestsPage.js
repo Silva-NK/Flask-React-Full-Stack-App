@@ -36,18 +36,18 @@ function GuestsPage() {
             credentials: "include",
         })
         .then((resp) => {
-            if(resp.ok) throw new Error("Failed to delete guest.");
+            if(!resp.ok) throw new Error("Failed to delete guest.");
             setGuests((prevGuests) => prevGuests.filter((guest) => guest.id !== id));
         })
         .catch((err) => {
             setErrors(err.message);
             console.error("Error deleting guest: ", err);
-            alert("Failed to delete guest.Please try again.")
+            alert("Failed to delete guest. Please try again.")
         });
     };
 
-    if (loading) return <p> Loading Guests... </p>;
-    if (errors) return <p style={{color: "red"}}>{errors}</p>
+    if (loading) return <p className="loading-message">Loading Guests...</p>;
+    if (errors) return <p className="error-message">{errors}</p>;
 
     return(
         <div className="guests-table-container">
@@ -74,39 +74,39 @@ function GuestsPage() {
                             ) : (
                                 guests.map((guest, index) => (
                                     <tr key={guest.id} className="guests-table__row">
-                                        <td className="guests-table__td guest-table__serial">{index + 1}</td>
-                                        <td className="guests-table__td guest-table__name">{guest.name}</td>
-                                        <td className="guests-table__td guest-table__email">
-                                            <a href={`mailto:${guest.email}`} className="guest-table__email-link">
+                                        <td className="guests-table__td guests-table__serial">{index + 1}</td>
+                                        <td className="guests-table__td guests-table__name">{guest.name}</td>
+                                        <td className="guests-table__td guests-table__email">
+                                            <a href={`mailto:${guest.email}`} className="guests-table__email-link">
                                                 {guest.email}
                                             </a>
                                         </td>
-                                        <td className="guests-table__td guest-table__phone">
-                                            <a href={`mailto:${guest.phone}`} className="guest-table__phone-link">
+                                        <td className="guests-table__td guests-table__phone">
+                                            <a href={`tel:${guest.phone}`} className="guests-table__phone-link">
                                                 {guest.phone}
                                             </a>
                                         </td>
-                                        <td className="guests-table__td guest-table__actions">
+                                        <td className="guests-table__td guests-table__actions">
                                             <button 
                                                className="guests-table__action-btn"
                                                onClick={() => navigate(`/guests/${guest.id}/edit`)}
-                                               aria-label="Edit guest"
+                                               title="Edit guest"
                                             >
-                                                <i className='bx  bx-edit-alt'  ></i>
+                                                <i className='bx bx-edit-alt'></i>
                                             </button>
                                             <button
                                                className="guests-table__action-btn"
                                                onClick={() => navigate(`/guests/${guest.id}`)}
-                                               aria-label="View details"
+                                               title="View details"
                                             >
-                                                <i className='bx  bx-file-detail'  ></i>
+                                                <i className='bx bx-folder-open'></i>
                                             </button>
                                             <button 
-                                               className="guests-table__action-btn guest-table__action-btn--delete"
+                                               className="guests-table__action-btn guests-table__action-btn--delete"
                                                onClick={() => handleDelete(guest.id)}
-                                               aria-label="Delete guest"
+                                               title="Delete guest"
                                             >
-                                                <i className='bx  bx-trash'  ></i>
+                                                <i className='bx bx-trash'></i>
                                             </button>  
                                         </td>
                                     </tr>

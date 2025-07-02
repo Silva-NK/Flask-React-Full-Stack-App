@@ -33,7 +33,10 @@ const EditAttendance = () => {
         fetch(`${process.env.REACT_APP_API_URL}/attendances/${id}`, {
             method: "PATCH",
             credentials: "include",
-            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
         })
         .then((response) => {
             if (response.ok) return response.json();
@@ -41,9 +44,9 @@ const EditAttendance = () => {
                 throw new Error(data.errors ? data.errors.join(" ") : "Attendance update failed.");
             });
         })
-        .then(() => {
+        .then((data) => {
             alert("Attendance updated successfully!");
-            navigate("/attendances");
+            navigate(`/attendances/${data.attendance.id}`);
         })
         .catch((error) => {
             setErrors({ api: error.message });

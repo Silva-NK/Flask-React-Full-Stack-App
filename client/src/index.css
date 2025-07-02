@@ -949,15 +949,15 @@ nav > ul > li:hover > a {
 /* GUESTS TABLE */
 
 .guests-table-container {
-  max-width: 1200px;
-  margin: 2rem auto;
+  max-width: 1600px;
+  margin: 3rem auto;
   padding: 0 2rem;
 }
 
 .guests-table__title {
   color: var(--header);
   font-weight: 600;
-  font-size: 1.8rem;
+  font-size: 2rem;
   position: relative;
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
@@ -968,15 +968,15 @@ nav > ul > li:hover > a {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 60px;
-  height: 3px;
+  width: 80px;
+  height: 4px;
   border-radius: 3px;
   background: var(--accent-teal);
 }
 
 .guests-table-scroll-container {
   position: relative;
-  max-height: 600px;
+  max-height: 700px;
   overflow-y: auto;
   background: white;
   border-radius: 12px;
@@ -984,8 +984,8 @@ nav > ul > li:hover > a {
 }
 
 .guests-table-scroll-container::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 .guests-table-scroll-container::-webkit-scrollbar-track {
@@ -1012,13 +1012,13 @@ nav > ul > li:hover > a {
 
 .guests-table {
   width: 100%;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   border-collapse: collapse;
 }
 
 .guests-table__header {
   background-color: var(--bg-warm-tint);
-  border-bottom: 1px solif var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .guests-table__th {
@@ -1026,7 +1026,8 @@ nav > ul > li:hover > a {
   font-weight: 600;
   color: var(--header);
   letter-spacing: 0.5px;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
+  font-size: 1.1rem;
 }
 
 .guests-table__body {
@@ -1035,7 +1036,7 @@ nav > ul > li:hover > a {
 
 .guests-table__row {
   transition: all 0.2s ease;
-  border-bottom: 1 px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .guests-table__row:last-child {
@@ -1048,8 +1049,9 @@ nav > ul > li:hover > a {
 
 .guests-table__td {
   color: var(--text);
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   vertical-align: middle;
+  font-size: 1.05rem;
 }
 
 .guests-table__serial {
@@ -1059,14 +1061,15 @@ nav > ul > li:hover > a {
 
 .guests-table__name {
   font-weight: 500;
-  color: var(--header)
+  color: var(--header);
+  font-size: 1.15rem;
 }
 
 .guests-table__email-link,
 .guests-table__phone-link {
   color: var(--accent-teal);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .guests-table__email-link:hover,
@@ -1077,35 +1080,51 @@ nav > ul > li:hover > a {
 
 .guests-table__actions {
   display: flex;
-  gap: 0.75rem;
+  gap: 1.2rem;
 }
 
 .guests-table__action-btn {
-  width: 32px;
-  height:32px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: none;
   border: none;
+  padding: 0.5rem;
   border-radius: 50%;
   color: var(--text-light);
   cursor: pointer;
   transition: all 0.2s ease;
+  font-size: 1.2rem;
+  position: relative;
 }
 
-.guests-table__action-btn:hover {
-  color: var(--accent-teal);
-  background: rgba(42, 140, 109, 0.1);
+.guests-table__action-btn:nth-child(1) i {
+  color: #FFA500;
+  font-size: 1.5rem;
 }
 
-.guests-table__action-btn--delete:hover {
-  color: var(--accent-rose);
-  background: rgba(160, 106, 106, 0.1);
+.guests-table__action-btn:nth-child(1):hover i {
+  color: #e69500;
 }
 
-.guests-table__action-btn i {
-  font-size: 1.1rem;
+.guests-table__action-btn:nth-child(2) i {
+  color: #4285F4;
+  font-size: 1.5rem;
+}
+
+.guests-table__action-btn:nth-child(2):hover i {
+  color: #357ae8;
+}
+
+.guests-table__action-btn--delete i {
+  color: #EA4335 !important;
+  font-size: 1.5rem;
+}
+
+.guests-table__action-btn--delete:hover i {
+  color: #d33426 !important;
 }
 
 .guests-table__empty-row {
@@ -1114,9 +1133,115 @@ nav > ul > li:hover > a {
 
 .guests-table__empty-message {
   padding: 3rem;
+  font-size: 1.2rem;
   text-align: center;
   font-style: italic;
-  color: var(--text-light)
+  color: var(--text-light);
+}
+
+/* REUSABLE DETAILS PAGES */
+
+.details-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.details-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
+}
+
+.details-title {
+  color: var(--header);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.details-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 60px;
+  height: 3px;
+  background: var(--accent-teal);
+  border-radius: 3px;
+}
+
+.details-content {
+  margin-bottom: 2rem;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: baseline;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: var(--header);
+  min-width: 120px;
+  margin-right: 1rem;
+}
+
+.detail-value {
+  color: var(--text);
+  flex: 1;
+}
+
+.details-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.details-button {
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.details-button--back {
+  background-color: white;
+  color: var(--accent-teal);
+  border: 1px solid var(--accent-teal);
+}
+
+.details-button--back:hover {
+  background-color: rgba(42, 140, 109, 0.05);
+}
+
+.loading-message,
+.error-message,
+.not-found-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+.loading-message {
+  color: var(--text-light);
+}
+
+.error-message {
+  color: var(--accent-rose);
+}
+
+.not-found-message {
+  color: var(--text);
+  font-style: italic;
 }
 
 /* ATTENDANCE DETAILS */
@@ -1532,4 +1657,36 @@ nav > ul > li:hover > a {
     .dashboard-page {
         padding-top: 3vh;
     }
+}
+
+@media (max-width: 992px) {
+  .guests-table__wrapper {
+    overflow-x: auto;
+    min-width: fit-content;
+  }
+
+  .guests-table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .guests-table-container {
+    padding: 0 1rem;
+  }
+
+  .guests-table__th,
+  .guests-table__td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .guests-table__actions {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .guests-table-scroll-container {
+    max-height: 400px;
+  }
 }

@@ -5,6 +5,8 @@ function Dashboard() {
     const { user, errors, setErrors } = useContext(AuthContext);
     const [eventCount, setEventCount] = useState(0);
     const [guestCount, setGuestCount] = useState(0);
+    const [pastEventCount, setPastEventCount] = useState(0);
+    const [upcomingEventCount, setUpcomingEventCount] = useState(0);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/profile`, {
@@ -17,6 +19,8 @@ function Dashboard() {
         .then((data) => {
             setEventCount(data.event_count);
             setGuestCount(data.guest_count);
+            setPastEventCount(data.past_event_count);
+            setUpcomingEventCount(data.upcoming_event_count);
         })
         .catch((err) => setErrors([err.message]));
     }, [setErrors]);
@@ -50,12 +54,12 @@ function Dashboard() {
 
                             <div className="stat-card">
                                 <h2 className="stat-title">Past Events</h2>
-                                <p className="stat-value">{guestCount}</p>
+                                <p className="stat-value">{pastEventCount}</p>
                             </div>
 
                             <div className="stat-card">
                                 <h2 className="stat-title">Upcoming Events</h2>
-                                <p className="stat-value">{guestCount}</p>
+                                <p className="stat-value">{upcomingEventCount}</p>
                             </div>
                             
                         </div>
