@@ -285,7 +285,79 @@ Open your browser and go to http://localhost:3000/ to see the application runnin
 
 ## Deploying the App
 
-**NOTE:** Still in the works.
+To dpeloy this full-stack Flask + React application:
+
+1. Backend (FLASK API)
+
+- Ensure all environment variables are set:
+
+    - DATABASE_URL – PostgreSQL database connection string.
+
+    - SECRET_KEY – your secret key for sessions.
+
+    - Any other variables required in config.py.
+
+- Install dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+- Run database migrations:
+
+    ```bash
+    flask db upgrade
+    ```
+
+- Push changes to github:
+
+    ```bash
+    `git add .`
+    `git commit -m "Commit message of choice."
+    `git push origin master`
+    ```
+- On render, give your backend a name set the root directory to `server`, set build command to `pip install -r requirements.txt` and start command to `gunicorn app:app`.
+
+- Set Environment variables as per specs `PYTHON_VERSION`, `DATABASE_URL` AND `SECRET_KEY` then deploy.
+
+
+2. Front-end (REACT Client)
+
+- Navigate to client directory and run:
+
+    ```bash
+    cd client
+    ```
+
+- Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+- Run build for production:
+
+    ```bash
+    npm run build
+    ```
+
+- Run start command:
+
+    ```bash
+    npx serve -s build
+    ```
+
+- Push changes to github with:
+
+    ```bash
+    `git add .`
+    `git commit -m "Commit message of choice."
+    `git push origin master`
+    ```
+- On Render, give your frontend a name set the root directory to `client`, set build command to `npm install && npm run build` and start command to `npx serve -s build`.
+
+- Set Environment variables as per specs `REACT_APP_API_UR` as the link to the deployed backend and then deploy.
+
 
 ## Resources
 
