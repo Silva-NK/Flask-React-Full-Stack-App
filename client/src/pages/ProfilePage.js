@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 function ProfilePage() {
-    const { user, setErrors } = useContext(AuthContext);
+    const { setErrors } = useContext(AuthContext);
     const [profile, setProfile] = useState(null);
     const [eventCount, setEventCount] = useState(0);
     const [guestCount, setGuestCount] = useState(0);
