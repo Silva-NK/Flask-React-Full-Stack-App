@@ -36,7 +36,8 @@ function LoginPage() {
             throw new Error("Invalid login credentials.");
             })
         .then((data) => {
-            login(data.user); // pass full user
+            console.log(data);
+            login(data.user);
             navigate("/dashboard");
         })
         .catch((err) => {
