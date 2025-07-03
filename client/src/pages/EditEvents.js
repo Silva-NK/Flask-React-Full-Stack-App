@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EventsForm from "../components/EventsForm";
 
-const EditEvents = () => {
+function EditEvents() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [event, setEvent] = useState(null);

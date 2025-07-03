@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import GuestsForm from "../components/GuestsForm";
 
-const AddGuests = () => {
+function AddGuests() {
     const navigate = useNavigate();
 
     const handleSubmit = (values, setSubmitting, resetForm, setErrors) => {
@@ -17,9 +17,17 @@ const AddGuests = () => {
         .then((response) => {
             if (response.ok) return response.json();
             return response.json().then((data) => {
-                throw new Error(
-                    data.errors ? data.errors.join(" ") : "Guest creation failed."
-                );
+                let errorMessage = "Guest creation failed.";
+                if (data.errors) {
+                    if (Array.isArray(data.errors)) {
+                        errorMessage = data.errors.join(" ");
+                    } else if (typeof data.errors === "object") {
+                        errorMessage = Object.values(data.errors).join(" ");
+                    } else if (typeof data.errors === "string") {
+                        errorMessage = data.errors;
+                    }
+                }
+                throw new Error(errorMessage);
             });
         })
         .then(() => {

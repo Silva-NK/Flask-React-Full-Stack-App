@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import EventsForm from "../components/EventsForm";
 
-const AddEvents = () => {
+function AddEvents() {
     const navigate = useNavigate();
 
     const handleSubmit = (values, actions) => {

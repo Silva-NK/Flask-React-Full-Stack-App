@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AttendanceForm from "../components/AttendanceForm";
 
-const AddAttendance = () => {
+function AddAttendance() {
     const navigate = useNavigate();
 
     const handleSubmit = (values, { setSubmitting, resetForm, setErrors }) => {

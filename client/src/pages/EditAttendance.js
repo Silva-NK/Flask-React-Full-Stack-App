@@ -1,35 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AttendanceForm from "../components/AttendanceForm";
 
-const EditAttendance = () => {
+function EditAttendance() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [attendance, setAttendance] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [errors, setErrors] = useState("");
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/attendances/${id}`, {
-            method: "GET",
             credentials: "include",
         })
-        .then((response) => response.json())
-        .then((data) => {
+        .then(res => {
+            if (res.ok) return res.json();
+            throw new Error("Failed to fetch attendance details.");
+        })
+        .then(data => {
             setAttendance(data);
             setLoading(false);
         })
-        .catch((error) => {
-            alert("Error fetching attendance data: " + error.message);
-            navigate("/attendances");
+        .catch(err => {
+            setErrors(err.message);
+            setLoading(false);
         });
-    }, [id, navigate]);
+    }, [id]);
 
-    const handleSubmit = (values, { setSubmitting, resetForm, setErrors }) => {
-        const formData = new FormData();
-        Object.keys(values).forEach((key) => {
-            formData.append(key, values[key]);
-        });
-
+    const handleSubmit = (values, { setSubmitting, setErrors }) => {
         fetch(`${process.env.REACT_APP_API_URL}/attendances/${id}`, {
             method: "PATCH",
             credentials: "include",
@@ -38,40 +36,45 @@ const EditAttendance = () => {
             },
             body: JSON.stringify(values),
         })
-        .then((response) => {
-            if (response.ok) return response.json();
-            return response.json().then((data) => {
-                throw new Error(data.errors ? data.errors.join(" ") : "Attendance update failed.");
+        .then(res => {
+            if (res.ok) return res.json();
+            return res.json().then(data => {
+                throw new Error(data.error || "Failed to update attendance.");
             });
         })
-        .then((data) => {
+        .then(data => {
             alert("Attendance updated successfully!");
-            navigate(`/attendances/${data.attendance.id}`);
+            navigate(`/attendances/${id}`);
         })
-        .catch((error) => {
-            setErrors({ api: error.message });
+        .catch(err => {
+            setErrors({ api: err.message });
         })
         .finally(() => {
             setSubmitting(false);
         });
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    if (loading) return <p>Loading attendance...</p>;
+    if (errors) return <p style={{ color: "red" }}>{errors}</p>;
+
+    const initialValues = {
+        id: attendance.id,
+        guest_id: attendance.guest_id,
+        guest_name: attendance.guest_name,
+        event_id: attendance.event_id,
+        event_name: attendance.event_name,
+        rsvp_status: attendance.rsvp_status,
+        plus_ones: attendance.plus_ones,
+    };
 
     return (
         <AttendanceForm
-            initialValues={{
-                guest_id: attendance.guest_id,
-                event_id: attendance.event_id,
-                rsvp_status: attendance.rsvp_status,
-                plus_ones: attendance.plus_ones,
-            }}
+            initialValues={initialValues}
             onSubmit={handleSubmit}
             title="Edit Attendance"
+            isEdit={true}
         />
     );
-};
+}
 
 export default EditAttendance;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import GuestsForm from "../components/GuestsForm";
 
-const EditGuests = () => {
+function EditGuests() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [guest, setGuest] = useState(null);

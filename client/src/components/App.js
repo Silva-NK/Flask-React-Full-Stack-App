@@ -19,6 +19,7 @@ import GuestDetails from "../pages/GuestDetails";
 import AddAttendance from "../pages/AddAttendance";
 import EditAttendance from "../pages/EditAttendance";
 import ViewAttendance from "../pages/ViewAttendance";
+import EventGuests from "../pages/EventGuests";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         {isLoggedIn && <Route path="/attendances/new" element={<AddAttendance />} />}
         {isLoggedIn && <Route path="/attendances/:id/edit" element={<EditAttendance />} />}
         {isLoggedIn && <Route path="/attendances/:id" element={<ViewAttendance />} />}
+        {isLoggedIn && <Route path="/events/:id/guests" element={<EventGuests />} />}
       </Routes>
       </div>
     </Router>

@@ -69,7 +69,19 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
                                 </div>
                             )}
 
-                           {!isEdit && (
+                           {isEdit ? (
+                                <div className="form-field">
+                                    <label htmlFor="guest_name" className="form-label">Guest:</label>
+                                    <input
+                                        type="text"
+                                        name="guest_name"
+                                        id="guest_name"
+                                        className="form-input"
+                                        value={initialValues.guest_name}
+                                        readOnly
+                                    />
+                                </div>
+                            ) : (
                                 <div className="form-field">
                                     <label htmlFor="guest_id" className="form-label">Guest:</label>
                                     <Field as="select" name="guest_id" id="guest_id" className="form-input">
@@ -82,9 +94,21 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
                                     </Field>
                                     <ErrorMessage name="guest_id" component="div" className="form-card__error" />
                                 </div>
-                           )}
+                            )}
 
-                            {!isEdit && (
+                            {isEdit ? (
+                                <div className="form-field">
+                                    <label htmlFor="event_name" className="form-label">Event:</label>
+                                    <input
+                                        type="text"
+                                        name="event_name"
+                                        id="event_name"
+                                        className="form-input"
+                                        value={initialValues.event_name}
+                                        readOnly
+                                    />
+                                </div>
+                            ) : (
                                 <div className="form-field">
                                     <label htmlFor="event_id" className="form-label">Event:</label>
                                     <Field as="select" name="event_id" id="event_id" className="form-input">
@@ -98,6 +122,7 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
                                     <ErrorMessage name="event_id" component="div" className="form-card__error" />
                                 </div>
                             )}
+
 
                             <div className="form-field">
                                 <label htmlFor="rsvp_status" className="form-label">RSVP Status:</label>
@@ -116,7 +141,6 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
                                    name="plus_ones"
                                    id="plus_ones"
                                    className="form-input"
-                                   disabled={values.rsvp_status === "Declined"}
                                 />
                                 <ErrorMessage name="plus_ones" component="div" className="form-card__error" />
                             </div>
@@ -134,7 +158,7 @@ function AttendanceForm({ initialValues = {}, onSubmit, title = "Add Attendance"
                                     <button
                                         type="button"
                                         className="form-button form-button--tertiary"
-                                        onClick={() => navigate("/attendances")}
+                                        onClick={() => navigate("/dashboard")}
                                         disabled={isSubmitting}
                                     >
                                         Cancel
