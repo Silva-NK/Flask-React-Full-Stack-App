@@ -95,7 +95,6 @@ function ViewAttendance() {
         </div>
       </div>
 
-      {/* Improved Guest List Button */}
       <div className="attendance-navigation">
         <button 
           className="attendance-button attendance-button--guestlist"
